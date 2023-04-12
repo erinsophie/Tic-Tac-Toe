@@ -1,85 +1,104 @@
 /*---------------CSS RESET---------------*/
 
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: "Manrope", sans-serif;
-  }
-  
-html, body {
-    height: 100%;
-  }
- 
-input, button, textarea, select {
-    font: inherit;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
 
 :root {
-    --dark-blue: #1B748A;
-    --light-blue: #5DC6DF;
-    --hover: #9DEAFC;
+  --dark-blue: #1b748a;
+  --light-blue: #5dc6df;
+  --hover: #9deafc;
 }
 
 /*---------------HEADER---------------*/
 
 .title {
-    display: flex;
-    justify-content: center;
-    padding: 30px;
-    font-size: 3rem;
-    color: var(--light-blue);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  font-size: 3rem;
+  color: var(--light-blue);
 }
 
 /*---------------MAIN---------------*/
 
+
 body {
-    background-color: var(--dark-blue);
-    display: flex;
-    flex-direction: column;
-    max-height: 100vh;
+  background-color: var(--dark-blue);
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-turn {
+  margin-bottom: 20px;
+  font-size: 1.7rem;
+  color: var(--light-blue);
 }
 
 .board {
-    height: 400px;
-    width: 400px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background-color: var(--light-blue);
+  background-color: var(--light-blue);
+  height: 400px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .cell {
-    border: 1px solid var(--dark-blue);
-    cursor: pointer;
-    font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 90px;
+  color: var(--dark-blue);
+  border: 2px solid var(--dark-blue);
 }
 
-.cell:hover, .restart-btn:hover {
-    background-color: var(--hover);
+.cell:hover,
+.restart-btn:hover {
+  background-color: var(--hover);
 }
 
 .btn-container {
-    padding: 20px;
+  margin-top: 20px;
 }
 
 .restart-btn {
-    padding: 10px 20px;
-    border-radius: 5px;
-    background-color: var(--light-blue);
-    color: var(--dark-blue);
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
 }
- 
+
+
+
