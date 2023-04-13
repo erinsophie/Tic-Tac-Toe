@@ -6,7 +6,7 @@ const Player = (marker) => {
 
 // MODULE FOR GAME BOARD
 const GameBoard = (() => {
-  let board = ["", "", "", "", "", "", "", "", ""];
+  let board = ['', '', '', '', '', '', '', '', ''];
 
   const getBoard = () => board;
 
@@ -15,7 +15,7 @@ const GameBoard = (() => {
   };
 
   const resetBoard = () => {
-    board = ["", "", "", "", "", "", "", "", ""];
+    board = ['', '', '', '', '', '', '', '', ''];
   };
 
   return { getBoard, updateBoard, resetBoard };
@@ -23,8 +23,8 @@ const GameBoard = (() => {
 
 // MODULE FOR GAME LOGIC
 const Game = (() => {
-  const player1 = Player("X");
-  const player2 = Player("O");
+  const player1 = Player('X');
+  const player2 = Player('O');
   let currentPlayer = player1;
   let gameOver = false;
 
@@ -39,9 +39,9 @@ const Game = (() => {
     [2, 4, 6],
   ];
 
-  const cells = document.querySelectorAll(".cell");
+  const cells = document.querySelectorAll('.cell');
   cells.forEach((cell) => {
-    cell.addEventListener("click", handleCellClick);
+    cell.addEventListener('click', handleCellClick);
   });
 
   function handleCellClick() {
@@ -50,7 +50,7 @@ const Game = (() => {
 
     // gets the current status of the board by accessing the board array and passing in the current index of the cell that was clicked
     // checks if that cell is already filled
-    if (GameBoard.getBoard()[cellIndex] !== "") {
+    if (GameBoard.getBoard()[cellIndex] !== '') {
       return;
     }
 
@@ -70,9 +70,10 @@ const Game = (() => {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////
+
   function switchPlayer() {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
-    const playerTurn = document.querySelector(".player-turn");
     playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
   }
 
@@ -83,7 +84,7 @@ const Game = (() => {
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
       // then check if all 3 indices have the same markers
-      if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
+      if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
         return true;
       }
     }
@@ -93,39 +94,40 @@ const Game = (() => {
   // gets the current state of the board and checks if every cell is filled
   function checkDraw() {
     const board = GameBoard.getBoard();
-    return board.every((cell) => cell !== "");
+    return board.every((cell) => cell !== '');
   }
 
   // when this is called gameover is set to true
   function endGame(message) {
     gameOver = true;
-    modal.classList.add("active");
-    overlay.classList.add("active");
-    const endGameMsg = document.querySelector(".message");
+    modal.classList.add('active');
+    overlay.classList.add('active');
+    const endGameMsg = document.querySelector('.message');
     endGameMsg.textContent = message;
   }
 
   function resetGame() {
     GameBoard.resetBoard();
     currentPlayer = player1;
-
+    playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
     gameOver = false;
     cells.forEach((cell) => {
-      cell.textContent = "";
+      cell.textContent = '';
     });
   }
 
   function closeModal() {
-    modal.classList.remove("active");
-    overlay.classList.remove("active");
+    modal.classList.remove('active');
+    overlay.classList.remove('active');
     resetGame();
   }
 
-  const modal = document.querySelector(".modal");
-  const overlay = document.querySelector(".overlay");
-  const resetBtn = document.querySelector(".reset-btn");
-  resetBtn.addEventListener("click", resetGame);
-  overlay.addEventListener("click", closeModal);
+  const modal = document.querySelector('.modal');
+  const overlay = document.querySelector('.overlay');
+  const resetBtn = document.querySelector('.reset-btn');
+  const playerTurn = document.querySelector('.player-turn');
+  resetBtn.addEventListener('click', resetGame);
+  overlay.addEventListener('click', closeModal);
 
   return { resetGame };
 })();

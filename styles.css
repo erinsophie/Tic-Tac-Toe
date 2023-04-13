@@ -30,13 +30,17 @@ select {
   --hover: #9deafc;
 }
 
+
+/*---------------Mobile---------------*/
+
 /*---------------HEADER---------------*/
 
 .title {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 20px;
-  font-size: 3rem;
+  font-size: 3.5rem;
   color: var(--light-blue);
 }
 
@@ -50,6 +54,7 @@ body {
 }
 
 main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,15 +62,16 @@ main {
 }
 
 .player-turn {
-  margin-bottom: 20px;
-  font-size: 1.7rem;
+  font-size: 2rem;
   color: var(--light-blue);
 }
 
 .board {
+  margin-top: 20px;
+  margin-bottom: 20px;
   background-color: var(--light-blue);
-  height: 400px;
-  width: 400px;
+  height: 350px;
+  width: 350px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -76,7 +82,7 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 90px;
+  font-size: 60px;
   color: var(--dark-blue);
   border: 2px solid var(--dark-blue);
 }
@@ -86,16 +92,12 @@ main {
   background-color: var(--hover);
 }
 
-.btn-container {
-  margin-top: 20px;
-}
-
 .reset-btn {
   padding: 10px 20px;
   border-radius: 5px;
   background-color: var(--light-blue);
   color: var(--dark-blue);
-  font-size: 1.2rem;
+  font-size: 2rem;
   border: none;
   cursor: pointer;
 }
@@ -135,6 +137,33 @@ main {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }  
+
+
+/*---------------Desktop---------------*/
+
+@media (min-width: 764px) {
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .board {
+    height: 400px;
+    width: 400px;
+ }
+
+ .cell {
+  font-size: 90px;
+ }
+
+ .reset-btn {
+  font-size: 1.6rem;
+ }
+
+ .player-turn {
+  font-size: 1.7rem;
+ }
+}
 
 
 
