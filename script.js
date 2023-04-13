@@ -54,7 +54,7 @@ const Game = (() => {
   function handleCellClick() {
     const cellIndex = parseInt(this.dataset.index);
 
-    if (GameBoard.getBoard()[cellIndex] !== "") {
+    if (GameBoard.getBoard()[cellIndex] !== '' || gameOver) {
       return;
     }
     GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
@@ -62,6 +62,7 @@ const Game = (() => {
 
     // check if winner or draw is true, if neither are true, then switch player
     if (checkWin()) {
+      this.textContent = currentPlayer.getMarker();
       endGame(`${currentPlayer.getMarker()} wins!`);
     } else if (checkDraw()) {
       endGame(`It's a draw!`);
@@ -97,5 +98,20 @@ const Game = (() => {
   function endGame(message) {
     gameOver = true;
     alert(message);
+    resetGame();
   }
+
+  function resetGame() {
+    GameBoard.resetBoard();
+    currentPlayer = player1;
+    gameOver = false;
+    cells.forEach(cell => {
+      cell.textContent = '';
+    });
+  }
+
+  const resetBtn = document.querySelector('.reset-btn');
+  resetBtn.addEventListener('click', resetGame);
+
+  return { resetGame };
 })();
