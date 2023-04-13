@@ -1,13 +1,12 @@
-// PLAYER FACTORY FUNCTION 
+// PLAYER FACTORY FUNCTION
 const Player = (marker) => {
   const getMarker = () => marker;
   return { getMarker };
 };
 
-
-// MODULE FOR GAME BOARD 
+// MODULE FOR GAME BOARD
 const GameBoard = (() => {
-  let board = ['', '', '', '', '', '', '', '', ''];
+  let board = ["", "", "", "", "", "", "", "", ""];
 
   const getBoard = () => board;
 
@@ -16,18 +15,17 @@ const GameBoard = (() => {
   };
 
   const resetBoard = () => {
-    board = ['', '', '', '', '', '', '', '', ''];
+    board = ["", "", "", "", "", "", "", "", ""];
   };
 
   return { getBoard, updateBoard, resetBoard };
 })();
 
-
 // MODULE FOR GAME LOGIC
 
 const Game = (() => {
-  const player1 = Player('X');
-  const player2 = Player('O');
+  const player1 = Player("X");
+  const player2 = Player("O");
   let currentPlayer = player1;
   let gameOver = false;
 
@@ -39,37 +37,45 @@ const Game = (() => {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
 
-  const cells = document.querySelectorAll('.cell');
-  cells.forEach(cell => {
-    cell.addEventListener('click', handleCellClick);
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach((cell) => {
+    cell.addEventListener("click", handleCellClick);
   });
 
   // functionm first gets the current status of the board by accessing the board array and passing in the current index of the cell that was clicked
-  // it then checks if that cell is already filled 
-  // if it's empty, the board array is passed the current cell's index and the current player's marker as arguments 
+  // it then checks if that cell is already filled
+  // if it's empty, the board array is passed the current cell's index and the current player's marker as arguments
   //which updates the array, making the current cell index equal the current player's marker
   // it then updates the cell's text content in the UI
 
   function handleCellClick() {
     const cellIndex = parseInt(this.dataset.index);
 
-    if (GameBoard.getBoard()[cellIndex] !== '') {
+    if (GameBoard.getBoard()[cellIndex] !== "") {
       return;
     }
     GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
     this.textContent = currentPlayer.getMarker();
 
+ 
+
+  function switchPlayer() {
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
   }
 
+    // check for winner using destructuring assignment to extract the 3 cell indices for each possible winning combo from winningCombinations array
+  // then checks if all 3 markers match eachother 
+  function checkWin() {
+    const board = GameBoard.getBoard();
+    for (let i = 0; i < winningCombinations.length; i++) {
+      const [a, b, c] = winningCombinations[i];
+      if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
+        return true;
+      }
+    }
+    return false;
+  }
 })();
-
-
-
-
-
-
-
-
