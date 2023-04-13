@@ -87,9 +87,15 @@ const Game = (() => {
     return false;
   }
 
-    // when this is called gameover is set to true 
-    function endGame(message) {
-      gameOver = true;
-      alert(message);
-    }
+  // gets the current state of the board and checks if every cell is filled
+  function checkDraw() {
+    const board = GameBoard.getBoard();
+    return board.every((cell) => cell !== "");
+  }
+
+  // when this is called gameover is set to true
+  function endGame(message) {
+    gameOver = true;
+    alert(message);
+  }
 })();
