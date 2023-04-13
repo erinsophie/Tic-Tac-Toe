@@ -22,7 +22,6 @@ const GameBoard = (() => {
 })();
 
 // MODULE FOR GAME LOGIC
-
 const Game = (() => {
   const player1 = Player("X");
   const player2 = Player("O");
@@ -45,27 +44,27 @@ const Game = (() => {
     cell.addEventListener("click", handleCellClick);
   });
 
-  // functionm first gets the current status of the board by accessing the board array and passing in the current index of the cell that was clicked
-  // it then checks if that cell is already filled
-  // if it's empty, the board array is passed the current cell's index and the current player's marker as arguments
-  //which updates the array, making the current cell index equal the current player's marker
-  // it then updates the cell's text content in the UI
-
   function handleCellClick() {
+    // get cell index from data index attribute
     const cellIndex = parseInt(this.dataset.index);
 
-    if (GameBoard.getBoard()[cellIndex] !== '' || gameOver) {
+    // gets the current status of the board by accessing the board array and passing in the current index of the cell that was clicked
+    // checks if that cell is already filled
+    if (GameBoard.getBoard()[cellIndex] !== "") {
       return;
     }
+
+    // if it's empty, the board array is passed the current cell's index
+    //which makes the current cell index equal the current player's marker
     GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
+    // the text content of each cell div is updated with the marker
     this.textContent = currentPlayer.getMarker();
 
     // check if winner or draw is true, if neither are true, then switch player
     if (checkWin()) {
-      this.textContent = currentPlayer.getMarker();
-      endGame(`${currentPlayer.getMarker()} wins!`);
+      endGame(`Player ${currentPlayer.getMarker()} wins!`);
     } else if (checkDraw()) {
-      endGame(`It's a draw!`);
+      endGame("It's a draw!");
     } else {
       switchPlayer();
     }
@@ -73,14 +72,17 @@ const Game = (() => {
 
   function switchPlayer() {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
+    const playerTurn = document.querySelector(".player-turn");
+    playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
   }
 
-  // check for winner using destructuring assignment to extract the 3 cell indices for each possible winning combo from winningCombinations array
-  // then checks if all 3 markers match eachother
   function checkWin() {
+    // retrieve board status from GameBoard object
     const board = GameBoard.getBoard();
+    // check for winner using destructuring assignment to extract the 3 cell indices for each possible winning combo from winningCombinations array
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
+      // then check if all 3 indices have the same markers
       if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
         return true;
       }
@@ -97,21 +99,33 @@ const Game = (() => {
   // when this is called gameover is set to true
   function endGame(message) {
     gameOver = true;
-    alert(message);
-    resetGame();
+    modal.classList.add("active");
+    overlay.classList.add("active");
+    const endGameMsg = document.querySelector(".message");
+    endGameMsg.textContent = message;
   }
 
   function resetGame() {
     GameBoard.resetBoard();
     currentPlayer = player1;
+
     gameOver = false;
-    cells.forEach(cell => {
-      cell.textContent = '';
+    cells.forEach((cell) => {
+      cell.textContent = "";
     });
   }
 
-  const resetBtn = document.querySelector('.reset-btn');
-  resetBtn.addEventListener('click', resetGame);
+  function closeModal() {
+    modal.classList.remove("active");
+    overlay.classList.remove("active");
+    resetGame();
+  }
+
+  const modal = document.querySelector(".modal");
+  const overlay = document.querySelector(".overlay");
+  const resetBtn = document.querySelector(".reset-btn");
+  resetBtn.addEventListener("click", resetGame);
+  overlay.addEventListener("click", closeModal);
 
   return { resetGame };
 })();
