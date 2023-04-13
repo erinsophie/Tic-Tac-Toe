@@ -42,6 +42,28 @@ const Game = (() => {
     [2, 4, 6]
   ];
 
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    cell.addEventListener('click', handleCellClick);
+  });
+
+  // functionm first gets the current status of the board by accessing the board array and passing in the current index of the cell that was clicked
+  // it then checks if that cell is already filled 
+  // if it's empty, the board array is passed the current cell's index and the current player's marker as arguments 
+  //which updates the array, making the current cell index equal the current player's marker
+  // it then updates the cell's text content in the UI
+
+  function handleCellClick() {
+    const cellIndex = parseInt(this.dataset.index);
+
+    if (GameBoard.getBoard()[cellIndex] !== '') {
+      return;
+    }
+    GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
+    this.textContent = currentPlayer.getMarker();
+
+  }
+
 })();
 
 
