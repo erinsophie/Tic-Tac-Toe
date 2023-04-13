@@ -60,22 +60,36 @@ const Game = (() => {
     GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
     this.textContent = currentPlayer.getMarker();
 
- 
+    // check if winner or draw is true, if neither are true, then switch player
+    if (checkWin()) {
+      endGame(`${currentPlayer.getMarker()} wins!`);
+    } else if (checkDraw()) {
+      endGame(`It's a draw!`);
+    } else {
+      switchPlayer();
+    }
+  }
 
   function switchPlayer() {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
   }
 
-    // check for winner using destructuring assignment to extract the 3 cell indices for each possible winning combo from winningCombinations array
-  // then checks if all 3 markers match eachother 
+  // check for winner using destructuring assignment to extract the 3 cell indices for each possible winning combo from winningCombinations array
+  // then checks if all 3 markers match eachother
   function checkWin() {
     const board = GameBoard.getBoard();
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
-      if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
+      if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
         return true;
       }
     }
     return false;
   }
+
+    // when this is called gameover is set to true 
+    function endGame(message) {
+      gameOver = true;
+      alert(message);
+    }
 })();
