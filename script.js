@@ -131,7 +131,6 @@ const Game = (() => {
 
   ////////////////////////////////////////////////////////////////////
   
-
   function switchPlayer() {
     //if in computer mode 
     if (state.computerModeOn === true) {
@@ -209,11 +208,11 @@ const Game = (() => {
   const modal = document.querySelector('.modal');
   const overlay = document.querySelector('.overlay');
   const resetBtn = document.querySelector('.reset-btn');
-  const playerTurn = document.querySelector('.player-turn');
   resetBtn.addEventListener('click', resetGame);
+  const playerTurn = document.querySelector('.player-turn');
+
 
   return { 
-    resetGame, 
     state, 
     setComputerMode, 
     setPlayerMode, 
