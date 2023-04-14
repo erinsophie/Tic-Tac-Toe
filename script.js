@@ -72,6 +72,17 @@ const Game = (() => {
 
   const playerBtn = document.querySelector('.player-btn');
   playerBtn.addEventListener('click', setPlayerMode);
+
+  const gameMode = document.querySelector('.game-mode');
+  function displayGameMode() {
+    let currentMode
+    if(state.computerModeOn === true) {
+      currentMode = 'Computer mode ✔'
+    } else {
+      currentMode = 'Player mode ✔'
+    }
+    return gameMode.textContent = currentMode
+  }
   
   function setPlayerMode() {
     if(state.computerModeOn === true) {
@@ -79,11 +90,15 @@ const Game = (() => {
     }
     state.playerModeOn = true;
     state.computerModeOn = false;
+    closeModal();
+    displayGameMode();
   }
   
   function setComputerMode() {
     state.computerModeOn = true;
     state.playerModeOn = false;
+    closeModal();
+    displayGameMode();
   }
 
   ////////////////////////////////////////////////////////////////////
@@ -203,9 +218,7 @@ const Game = (() => {
   const overlay = document.querySelector('.overlay');
   const resetBtn = document.querySelector('.reset-btn');
   const playerTurn = document.querySelector('.player-turn');
-  const gameMode = document.querySelector('.game-mode');
   resetBtn.addEventListener('click', resetGame);
-  overlay.addEventListener('click', closeModal);
 
   return { 
     resetGame, 

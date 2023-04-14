@@ -39,7 +39,7 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px;
+  padding: 15px;
   font-size: 3.5rem;
   color: var(--light-blue);
 }
@@ -59,6 +59,20 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
+.top-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+
+.game-mode {
+  font-size: 1.2rem;
+  color: var(--light-blue);
+}
+
 
 .player-turn {
   font-size: 2rem;
@@ -94,7 +108,7 @@ button:hover {
   background-color: var(--hover);
 }
 
-.reset-btn, .player-btn, .computer-btn {
+button {
   padding: 10px 20px;
   border-radius: 5px;
   background-color: var(--light-blue);
@@ -104,11 +118,20 @@ button:hover {
   cursor: pointer;
 }
 
+.btn-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 
 
 /*---------------MODAL---------------*/
 
 .modal {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   position: fixed;
   z-index: 1;
   top: 50%;
@@ -140,20 +163,25 @@ button:hover {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-} 
+}
+
 
 /*---------------buttons---------------*/
 
-.game-mode {
-  display: flex;
-  gap: 20px;
+
+.modal > button {
+   background-color: var(--dark-blue);
+   color: var(--light-blue);
 }
 
-.computer-btn:focus, .player-btn:focus {
-   background-color: var(--hover);
-   color: var(--dark-blue);
+.modal > button:hover {
+  background-color: var(--hover);
+  color: var(--dark-blue);
 }
 
+.choose-round {
+  font-size: 1.4rem;
+}
 
 
 /*---------------Desktop---------------*/
