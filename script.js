@@ -4,7 +4,6 @@ const Player = (marker) => {
   return { getMarker };
 };
 
-
 // COMPUTER FACTORY FUNCTION
 const ComputerPlayer = (marker) => {
   const getMarker = () => marker;
@@ -12,17 +11,15 @@ const ComputerPlayer = (marker) => {
   const getMove = (board) => {
     const availableCells = [];
     board.forEach((cell, index) => {
-     if(cell === '') {
-       availableCells.push(index)
-     }
-    }
-  )
-  const randomIndex = Math.floor(Math.random() * availableCells.length);
-  return availableCells[randomIndex];
- };
-  return { getMarker, getMove }
+      if (cell === '') {
+        availableCells.push(index);
+      }
+    });
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    return availableCells[randomIndex];
+  };
+  return { getMarker, getMove };
 };
-
 
 // MODULE FOR GAME BOARD
 const GameBoard = (() => {
@@ -40,8 +37,6 @@ const GameBoard = (() => {
 
   return { getBoard, updateBoard, resetBoard };
 })();
-
-
 
 // MODULE FOR GAME LOGIC
 const Game = (() => {
@@ -66,35 +61,39 @@ const Game = (() => {
     [2, 4, 6],
   ];
 
+
   ////////////////////////////////////////////////////////////////////
 
-  const computerBtn = document.querySelector('.computer-btn');
-  computerBtn.addEventListener('click', setComputerMode);
-
-  const playerBtn = document.querySelector('.player-btn');
-  playerBtn.addEventListener('click', setPlayerMode);
-
   const gameMode = document.querySelector('.game-mode');
+
   function displayGameMode() {
-    let currentMode
-    if(state.computerModeOn === true) {
-      currentMode = 'Computer mode ✔'
+    let currentMode;
+    if (state.computerModeOn === true) {
+      currentMode = 'Computer mode ✔';
     } else {
-      currentMode = 'Player mode ✔'
+      currentMode = 'Player mode ✔';
     }
-    return gameMode.textContent = currentMode
+    return (gameMode.textContent = currentMode);
   }
-  
-  function setPlayerMode() {
-    state.playerModeOn = true;
-    state.computerModeOn = false;
-    closeModal();
-    displayGameMode();
-  }
-  
+
+  ////////////////////////////////////////////////////////////////////
+
+  const computerBtn = document.querySelectorAll('.computer-btn');
+  computerBtn.forEach(button => button.addEventListener('click', setComputerMode));
+
   function setComputerMode() {
     state.computerModeOn = true;
     state.playerModeOn = false;
+    closeModal();
+    displayGameMode();
+  }
+
+  const playerBtn = document.querySelectorAll('.player-btn');
+  playerBtn.forEach(button => button.addEventListener('click', setPlayerMode));
+
+  function setPlayerMode() {
+    state.playerModeOn = true;
+    state.computerModeOn = false;
     closeModal();
     displayGameMode();
   }
@@ -106,9 +105,9 @@ const Game = (() => {
     cell.addEventListener('click', handleCellClick);
   });
 
-   ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
 
-   function handleOutcome() {
+  function handleOutcome() {
     if (checkWin()) {
       endGame(`Player ${currentPlayer.getMarker()} wins!`);
     } else if (checkDraw()) {
@@ -130,9 +129,9 @@ const Game = (() => {
   }
 
   ////////////////////////////////////////////////////////////////////
-  
+
   function switchPlayer() {
-    //if in computer mode 
+    //if in computer mode
     if (state.computerModeOn === true) {
       currentPlayer = currentPlayer === player1 ? computerPlayer : player1;
 
@@ -143,7 +142,7 @@ const Game = (() => {
 
         setTimeout(() => {
           cells[computerMove].textContent = currentPlayer.getMarker();
-         handleOutcome();
+          handleOutcome();
         }, 500);
 
         playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
@@ -154,7 +153,7 @@ const Game = (() => {
     playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
   }
 
-   ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
 
   function checkWin() {
     const board = GameBoard.getBoard();
@@ -168,14 +167,14 @@ const Game = (() => {
     return false;
   }
 
-   ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
 
   function checkDraw() {
     const board = GameBoard.getBoard();
     return board.every((cell) => cell !== '');
   }
 
-   ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
 
   function endGame(message) {
     gameOver = true;
@@ -185,7 +184,7 @@ const Game = (() => {
     endGameMsg.textContent = message;
   }
 
-   ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
 
   function resetGame() {
     GameBoard.resetBoard();
@@ -197,24 +196,38 @@ const Game = (() => {
     });
   }
 
-   ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
 
   function closeModal() {
     modal.classList.remove('active');
     overlay.classList.remove('active');
+    modeModal.classList.remove('active')
     resetGame();
   }
 
   const modal = document.querySelector('.modal');
   const overlay = document.querySelector('.overlay');
+  overlay.addEventListener('click', closeModal);
   const resetBtn = document.querySelector('.reset-btn');
   resetBtn.addEventListener('click', resetGame);
   const playerTurn = document.querySelector('.player-turn');
 
+  ////////////////////////////////////////////////////////////////////
 
-  return { 
-    state, 
-    setComputerMode, 
-    setPlayerMode, 
-     };
+  const chooseMode = document.querySelector('.choose-mode');
+  chooseMode.addEventListener('click', setMode);
+  const modeModal = document.querySelector('.mode-modal');
+
+  function setMode() {
+    modeModal.classList.add('active');
+    overlay.classList.add('active');
+  }
+
+  ////////////////////////////////////////////////////////////////////
+
+  return {
+    state,
+    setComputerMode,
+    setPlayerMode,
+  };
 })();

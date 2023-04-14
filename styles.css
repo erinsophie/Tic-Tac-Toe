@@ -128,7 +128,7 @@ button {
 
 /*---------------MODAL---------------*/
 
-.modal {
+.modal, .mode-modal {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -147,7 +147,7 @@ button {
   padding: 20px;
 }
 
-.modal.active {
+.modal.active, .mode-modal.active {
   transform: translate(-50%, -50%) scale(1);
 }
 
@@ -169,12 +169,12 @@ button {
 /*---------------buttons---------------*/
 
 
-.modal > button {
+.modal-btn {
    background-color: var(--dark-blue);
    color: var(--light-blue);
 }
 
-.modal > button:hover {
+.modal-btn:hover {
   background-color: var(--hover);
   color: var(--dark-blue);
 }
