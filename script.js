@@ -4,6 +4,25 @@ const Player = (marker) => {
   return { getMarker };
 };
 
+// COMPUTER FACTORY FUNCTION
+const ComputerPlayer = (marker) => {
+  const getMarker = () => marker;
+
+  const getMove = (board) => {
+    const availableCells = [];
+    board.forEach((cell, index) => {
+     if(cell === '') {
+       availableCells.push(index)
+     }
+    }
+  )
+  const randomIndex = Math.floor(Math.random() * availableCells.length);
+  return availableCells[randomIndex];
+ };
+
+  return { getMarker, getMove }
+};
+
 // MODULE FOR GAME BOARD
 const GameBoard = (() => {
   let board = ['', '', '', '', '', '', '', '', ''];
@@ -21,12 +40,19 @@ const GameBoard = (() => {
   return { getBoard, updateBoard, resetBoard };
 })();
 
+
+
 // MODULE FOR GAME LOGIC
 const Game = (() => {
   const player1 = Player('X');
   const player2 = Player('O');
   let currentPlayer = player1;
   let gameOver = false;
+  let computerPlayer = ComputerPlayer('O');
+  const state = {
+    computerModeOn: false,
+    playerModeOn: true,
+  };
 
   const winningCombinations = [
     [0, 1, 2],
@@ -39,28 +65,46 @@ const Game = (() => {
     [2, 4, 6],
   ];
 
+  ////////////////////////////////////////////////////////////////////
+
+  const computerBtn = document.querySelector('.computer-btn');
+  computerBtn.addEventListener('click', setComputerMode);
+
+  const playerBtn = document.querySelector('.player-btn');
+  playerBtn.addEventListener('click', setPlayerMode);
+  
+  function setPlayerMode() {
+    if(state.computerModeOn === true) {
+      resetGame();
+    }
+    state.playerModeOn = true;
+    state.computerModeOn = false;
+  }
+  
+  function setComputerMode() {
+    state.computerModeOn = true;
+    state.playerModeOn = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////
+
   const cells = document.querySelectorAll('.cell');
   cells.forEach((cell) => {
     cell.addEventListener('click', handleCellClick);
   });
 
+   ////////////////////////////////////////////////////////////////////
+
   function handleCellClick() {
-    // get cell index from data index attribute
     const cellIndex = parseInt(this.dataset.index);
 
-    // gets the current status of the board by accessing the board array and passing in the current index of the cell that was clicked
-    // checks if that cell is already filled
     if (GameBoard.getBoard()[cellIndex] !== '') {
       return;
     }
 
-    // if it's empty, the board array is passed the current cell's index
-    //which makes the current cell index equal the current player's marker
     GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
-    // the text content of each cell div is updated with the marker
     this.textContent = currentPlayer.getMarker();
 
-    // check if winner or draw is true, if neither are true, then switch player
     if (checkWin()) {
       endGame(`Player ${currentPlayer.getMarker()} wins!`);
     } else if (checkDraw()) {
@@ -73,17 +117,44 @@ const Game = (() => {
   ////////////////////////////////////////////////////////////////////
 
   function switchPlayer() {
-    currentPlayer = currentPlayer === player1 ? player2 : player1;
+    //if in computer mode 
+    if (state.computerModeOn === true) {
+      currentPlayer = currentPlayer === player1 ? computerPlayer : player1;
+  
+      if (currentPlayer === computerPlayer) {
+        // retrieve available cells
+        const computerMove = computerPlayer.getMove(GameBoard.getBoard());
+        GameBoard.updateBoard(computerMove, currentPlayer.getMarker());
+        
+        // set a delay of 1 second before making the computer's move
+        setTimeout(() => {
+          cells[computerMove].textContent = currentPlayer.getMarker();
+          
+          if (checkWin()) {
+            endGame(`Player ${currentPlayer.getMarker()} wins!`);
+          } else if (checkDraw()) {
+            endGame("It's a draw!");
+          } else {
+            switchPlayer();
+          }
+        }, 500);
+        playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
+      }
+      // if in normal player mode
+    } else {
+      currentPlayer = currentPlayer === player1 ? player2 : player1;
+    }
     playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
   }
 
+
+   ////////////////////////////////////////////////////////////////////
+
   function checkWin() {
-    // retrieve board status from GameBoard object
     const board = GameBoard.getBoard();
-    // check for winner using destructuring assignment to extract the 3 cell indices for each possible winning combo from winningCombinations array
+
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
-      // then check if all 3 indices have the same markers
       if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
         return true;
       }
@@ -91,13 +162,15 @@ const Game = (() => {
     return false;
   }
 
-  // gets the current state of the board and checks if every cell is filled
+   ////////////////////////////////////////////////////////////////////
+
   function checkDraw() {
     const board = GameBoard.getBoard();
     return board.every((cell) => cell !== '');
   }
 
-  // when this is called gameover is set to true
+   ////////////////////////////////////////////////////////////////////
+
   function endGame(message) {
     gameOver = true;
     modal.classList.add('active');
@@ -105,6 +178,8 @@ const Game = (() => {
     const endGameMsg = document.querySelector('.message');
     endGameMsg.textContent = message;
   }
+
+   ////////////////////////////////////////////////////////////////////
 
   function resetGame() {
     GameBoard.resetBoard();
@@ -116,6 +191,8 @@ const Game = (() => {
     });
   }
 
+   ////////////////////////////////////////////////////////////////////
+
   function closeModal() {
     modal.classList.remove('active');
     overlay.classList.remove('active');
@@ -126,8 +203,14 @@ const Game = (() => {
   const overlay = document.querySelector('.overlay');
   const resetBtn = document.querySelector('.reset-btn');
   const playerTurn = document.querySelector('.player-turn');
+  const gameMode = document.querySelector('.game-mode');
   resetBtn.addEventListener('click', resetGame);
   overlay.addEventListener('click', closeModal);
 
-  return { resetGame };
+  return { 
+    resetGame, 
+    state, 
+    setComputerMode, 
+    setPlayerMode, 
+     };
 })();
