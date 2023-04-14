@@ -4,6 +4,7 @@ const Player = (marker) => {
   return { getMarker };
 };
 
+
 // COMPUTER FACTORY FUNCTION
 const ComputerPlayer = (marker) => {
   const getMarker = () => marker;
@@ -19,9 +20,9 @@ const ComputerPlayer = (marker) => {
   const randomIndex = Math.floor(Math.random() * availableCells.length);
   return availableCells[randomIndex];
  };
-
   return { getMarker, getMove }
 };
+
 
 // MODULE FOR GAME BOARD
 const GameBoard = (() => {
@@ -85,9 +86,6 @@ const Game = (() => {
   }
   
   function setPlayerMode() {
-    if(state.computerModeOn === true) {
-      resetGame();
-    }
     state.playerModeOn = true;
     state.computerModeOn = false;
     closeModal();
@@ -110,16 +108,7 @@ const Game = (() => {
 
    ////////////////////////////////////////////////////////////////////
 
-  function handleCellClick() {
-    const cellIndex = parseInt(this.dataset.index);
-
-    if (GameBoard.getBoard()[cellIndex] !== '') {
-      return;
-    }
-
-    GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
-    this.textContent = currentPlayer.getMarker();
-
+   function handleOutcome() {
     if (checkWin()) {
       endGame(`Player ${currentPlayer.getMarker()} wins!`);
     } else if (checkDraw()) {
@@ -129,39 +118,42 @@ const Game = (() => {
     }
   }
 
+  function handleCellClick() {
+    const cellIndex = parseInt(this.dataset.index);
+
+    if (GameBoard.getBoard()[cellIndex] !== '') {
+      return;
+    }
+    GameBoard.updateBoard(cellIndex, currentPlayer.getMarker());
+    this.textContent = currentPlayer.getMarker();
+    handleOutcome();
+  }
+
   ////////////////////////////////////////////////////////////////////
+  
 
   function switchPlayer() {
     //if in computer mode 
     if (state.computerModeOn === true) {
       currentPlayer = currentPlayer === player1 ? computerPlayer : player1;
-  
+
       if (currentPlayer === computerPlayer) {
         // retrieve available cells
         const computerMove = computerPlayer.getMove(GameBoard.getBoard());
         GameBoard.updateBoard(computerMove, currentPlayer.getMarker());
-        
-        // set a delay of 1 second before making the computer's move
+
         setTimeout(() => {
           cells[computerMove].textContent = currentPlayer.getMarker();
-          
-          if (checkWin()) {
-            endGame(`Player ${currentPlayer.getMarker()} wins!`);
-          } else if (checkDraw()) {
-            endGame("It's a draw!");
-          } else {
-            switchPlayer();
-          }
+         handleOutcome();
         }, 500);
+
         playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
       }
-      // if in normal player mode
     } else {
       currentPlayer = currentPlayer === player1 ? player2 : player1;
     }
     playerTurn.textContent = `Player ${currentPlayer.getMarker()}'s turn`;
   }
-
 
    ////////////////////////////////////////////////////////////////////
 
