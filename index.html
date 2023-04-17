@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
     <title>Tic Tac Toe</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1 class="title">Tic Tac Toe</h1>
+      <h1 class="title">Tic Tac Toe</h1>
     </header>
 
     <main>
-        <div class="top-text">
-            <p class="game-mode">Player mode ✔</p>
-            <p class="player-turn">Player X's turn</p>
-        </div>
+      <div class="top-text">
+        <p class="game-mode">Player mode ✔</p>
+        <p class="player-turn">Player X's turn</p>
+      </div>
 
-        <div class="board">
-           <div class="cell" data-index="0"></div>
-           <div class="cell" data-index="1"></div>
-           <div class="cell" data-index="2"></div>
-           <div class="cell" data-index="3"></div>
-           <div class="cell" data-index="4"></div>
-           <div class="cell" data-index="5"></div>
-           <div class="cell" data-index="6"></div>
-           <div class="cell" data-index="7"></div>
-           <div class="cell" data-index="8"></div>
-        </div>
+      <div class="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
 
-        <div class="btn-container">
-           <button class="choose-mode">Choose mode</button>
-           <button class="reset-btn">Restart</button>
-        </div>
+      <div class="btn-container">
+        <button class="choose-mode">Choose mode</button>
+        <button class="reset-btn">Restart</button>
+      </div>
 
-        <div class="modal">
-            <p class="message"></p>
-            <p class="choose-round">Choose next round:</p>
-            <button class="player-btn modal-btn">Player mode</button>
-            <button class="computer-btn modal-btn">Computer mode</button>
-        </div>
+      <div class="modal">
+        <p class="message"></p>
+        <p class="choose-round">Choose next round:</p>
+        <button class="player-btn modal-btn">Player mode</button>
+        <button class="computer-btn modal-btn">Computer mode</button>
+      </div>
 
-        <div class="mode-modal">
-            <p>Choose mode:</p>
-            <button class="player-btn modal-btn">Player mode</button>
-            <button class="computer-btn modal-btn">Computer mode</button>
-        </div>
+      <div class="mode-modal">
+        <p>Choose mode:</p>
+        <button class="player-btn modal-btn">Player mode</button>
+        <button class="computer-btn modal-btn">Computer mode</button>
+      </div>
 
-        <div class="overlay"></div>
+      <div class="overlay"></div>
     </main>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

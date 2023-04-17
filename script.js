@@ -78,7 +78,9 @@ const Game = (() => {
   ////////////////////////////////////////////////////////////////////
 
   const computerBtn = document.querySelectorAll('.computer-btn');
-  computerBtn.forEach(button => button.addEventListener('click', setComputerMode));
+  computerBtn.forEach((button) =>
+    button.addEventListener('click', setComputerMode)
+  );
 
   function setComputerMode() {
     state.computerModeOn = true;
@@ -88,7 +90,9 @@ const Game = (() => {
   }
 
   const playerBtn = document.querySelectorAll('.player-btn');
-  playerBtn.forEach(button => button.addEventListener('click', setPlayerMode));
+  playerBtn.forEach((button) =>
+    button.addEventListener('click', setPlayerMode)
+  );
 
   function setPlayerMode() {
     state.playerModeOn = true;
@@ -200,7 +204,7 @@ const Game = (() => {
   function closeModal() {
     modal.classList.remove('active');
     overlay.classList.remove('active');
-    modeModal.classList.remove('active')
+    modeModal.classList.remove('active');
     resetGame();
   }
 
