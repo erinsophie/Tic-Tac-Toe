@@ -61,7 +61,6 @@ const Game = (() => {
     [2, 4, 6],
   ];
 
-
   ////////////////////////////////////////////////////////////////////
 
   const gameMode = document.querySelector('.game-mode');
